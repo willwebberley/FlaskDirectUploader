@@ -3,12 +3,14 @@ import time, os, json, base64, hmac, sha
 
 app = Flask(__name__)
 
-
+# Listen for GET requests to yourdomain.com/account/
 @app.route("/account/")
-def home():
+def account():
     # Show the account edit HTML page:
-	return render_template('account.html')
+    return render_template('account.html')
 
+
+# Listen for POST requests to yourdomain.com/submit_form/
 @app.route("/submit_form/", methods=["POST"])
 def submit_form():
     # Collect the data posted from the HTML form in account.html:
@@ -22,9 +24,11 @@ def submit_form():
     # Redirect to the user's profile page, if appropriate
     return redirect(url_for('profile'))
 
+
+# Listen for GET requests to yourdomain.com/sign_s3/
 @app.route('/sign_s3/')
 def sign_s3():
-    # Load necessary informatin into the application:
+    # Load necessary information into the application:
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     S3_BUCKET = os.environ.get('S3_BUCKET')
