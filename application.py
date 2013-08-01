@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import time, os, json, base64, hmac, sha
+import time, os, json, base64, hmac, sha, urllib
 
 app = Flask(__name__)
 
@@ -32,7 +32,7 @@ def sign_s3():
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     S3_BUCKET = os.environ.get('S3_BUCKET')
-    
+
     # Collect information on the file from the GET parameters of the request:
     object_name = request.args.get('s3_object_name')
     mime_type = request.args.get('s3_object_type')
@@ -46,6 +46,8 @@ def sign_s3():
      
     # Generate the signature with which the request can be signed:
     signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, sha).digest())
+    # Remove surrounding whitespace and quote special characters:
+    signature = urllib.quote_plus(signature.strip())
 
     # Build the URL of the file in anticipation of its imminent upload:
     url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
@@ -58,6 +60,7 @@ def sign_s3():
     
 # Main code
 if __name__ == '__main__':
+    app.debug = True
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
