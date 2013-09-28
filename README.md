@@ -12,6 +12,9 @@ This is the companion repository to the Heroku article, [Direct to S3 File Uploa
 
 This code is mostly ready to be run as cloned, but a function `update_account()` will need to be defined to handle the storing of the POSTed information.
 
+The script `s3upload.js` is copyright 2013 tadruj. Please find more information on this script at its home [repository](https://github.com/tadruj/s3upload-coffee-javascript). It is released under the Apache License, and the full license text is available [here](http://www.apache.org/licenses/LICENSE-2.0).
+
+
 **Running the application**
 * Set environment variables for your AWS access key and secret (see [companion article](https://devcenter.heroku.com/articles/s3-upload-python))
 * Download and install the [Heroku toolbelt](https://toolbelt.heroku.com/)
