@@ -1,6 +1,14 @@
 FlaskDirectUploader
 ===================
 
+Licensing
+----------
+
+*General*: The files in this repository are, unless stated otherwise, released under the Apache License. You are free to redistribute this code with or without modification. The full license text is available [here](http://www.apache.org/licenses/LICENSE-2.0). 
+
+*Other*: The script `s3upload.js` is copyright 2013 tadruj. Please find more information on this script at its home [repository](https://github.com/tadruj/s3upload-coffee-javascript). It is released under the Apache License, and the full license text is available [here](http://www.apache.org/licenses/LICENSE-2.0).
+
+
 Direct-to-S3 uploads in a Python application running on Heroku
 -----------------------------------------------------------------------------
 
@@ -11,8 +19,6 @@ The example focuses on Flask as the web framework and is targeted for use on the
 This is the companion repository to the Heroku article, [Direct to S3 File Uploads in Python](https://devcenter.heroku.com/articles/s3-upload-python).
 
 This code is mostly ready to be run as cloned, but a function `update_account()` will need to be defined to handle the storing of the POSTed information.
-
-The script `s3upload.js` is copyright 2013 tadruj. Please find more information on this script at its home [repository](https://github.com/tadruj/s3upload-coffee-javascript). It is released under the Apache License, and the full license text is available [here](http://www.apache.org/licenses/LICENSE-2.0).
 
 
 **Running the application**
