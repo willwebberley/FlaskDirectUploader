@@ -43,7 +43,7 @@ def sign_s3():
     S3_BUCKET = os.environ.get('S3_BUCKET')
 
     # Collect information on the file from the GET parameters of the request:
-    object_name = request.args.get('s3_object_name')
+    object_name = urllib.quote_plus(request.args.get('s3_object_name'))
     mime_type = request.args.get('s3_object_type')
  
     # Set the expiry time of the signature (in seconds) and declare the permissions of the file to be uploaded
