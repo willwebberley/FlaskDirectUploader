@@ -33,7 +33,7 @@ $().ready(function() {
 
     function s3_upload(){
         var s3upload = new S3Upload({
-            s3_object_name: encodeURIComponent($('#files')[0].files[0].name),
+            s3_object_name: encodeURIComponent($('#files').val()),
             file_dom_selector: '#files',
             s3_sign_put_url: '/sign_s3/',
             onProgress: function(percent, message) {
