@@ -29,26 +29,29 @@
 <script type="text/javascript" src="/static/js/s3upload.js"></script>
 
 <script type="text/javascript">
-$('#files').on("change", s3_upload);
+$().ready(function() {
 
-function s3_upload(){
-    var s3upload = new S3Upload({
-        s3_object_name: encodeURIComponent($('#files')[0].files[0].name),
-        file_dom_selector: '#files',
-        s3_sign_put_url: '/sign_s3/',
-        onProgress: function(percent, message) {
-            $('#status').html('Upload progress: ' + percent + '%' + message);
-        },
-        onFinishS3Put: function(public_url) { 
-            $('#status').html('Upload completed. Uploaded to: '+ public_url);
-            $("#avatar_url").val(public_url);
-            $("#preview").html('<img src="'+public_url+'" style="width:300px;" />');
-        },
-        onError: function(status) {
-            $('#status').html('Upload error: ' + status);
-        }
-    });
-}
+    function s3_upload(){
+        var s3upload = new S3Upload({
+            s3_object_name: encodeURIComponent($('#files')[0].files[0].name),
+            file_dom_selector: '#files',
+            s3_sign_put_url: '/sign_s3/',
+            onProgress: function(percent, message) {
+                $('#status').html('Upload progress: ' + percent + '%' + message);
+            },
+            onFinishS3Put: function(public_url) {
+                $('#status').html('Upload completed. Uploaded to: '+ public_url);
+                $("#avatar_url").val(public_url);
+                $("#preview").html('<img src="'+public_url+'" style="width:300px;" />');
+            },
+            onError: function(status) {
+                $('#status').html('Upload error: ' + status);
+            }
+        });
+    }
+
+    $('#files').on("change", s3_upload);
+});
 </script>
 </body>
 </html>
