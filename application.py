@@ -7,7 +7,7 @@
 ####
 
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, Response, url_for
 import time, os, json, base64, hmac, sha, urllib
 
 app = Flask(__name__)
@@ -43,9 +43,9 @@ def sign_s3():
     S3_BUCKET = os.environ.get('S3_BUCKET')
 
     # Collect information on the file from the GET parameters of the request:
-    object_name = request.args.get('s3_object_name')
+    object_name = urllib.quote_plus(request.args.get('s3_object_name'))
     mime_type = request.args.get('s3_object_type')
- 
+
     # Set the expiry time of the signature (in seconds) and declare the permissions of the file to be uploaded
     expires = int(time.time()+10)
     amz_headers = "x-amz-acl:public-read"
@@ -60,12 +60,14 @@ def sign_s3():
 
     # Build the URL of the file in anticipation of its imminent upload:
     url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
+
+    content = json.dumps({
+        'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (url, AWS_ACCESS_KEY, expires, signature),
+        'url': url
+    })
     
     # Return the signed request and the anticipated URL back to the browser in JSON format:
-    return json.dumps({
-            'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (url, AWS_ACCESS_KEY, expires, signature),
-            'url': url
-        })
+    return Response(content, mimetype='text/plain; charset=x-user-defined')
     
 # Main code
 if __name__ == '__main__':

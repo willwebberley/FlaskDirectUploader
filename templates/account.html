@@ -7,7 +7,7 @@
 
 <h2>Your avatar</h2>
 
-<input type="file" id="files"  onchange="s3_upload();"/>
+<input type="file" id="files"/>
 <p id="status">Please select a file</p>
 <div style="border:1px solid gray;width:300px;"  id="preview"><img src="/static/media/default.png" style="width:300px;" /></div>
 
@@ -34,9 +34,9 @@ function s3_upload(){
         file_dom_selector: '#files',
         s3_sign_put_url: '/sign_s3/',
         onProgress: function(percent, message) {
-            $('#status').html('Upload progress: ' + percent + '%' + message);
+            $('#status').html('Upload progress: ' + percent + '% ' + message);
         },
-        onFinishS3Put: function(public_url) { 
+        onFinishS3Put: function(public_url) {
             $('#status').html('Upload completed. Uploaded to: '+ public_url);
             $("#avatar_url").val(public_url);
             $("#preview").html('<img src="'+public_url+'" style="width:300px;" />');
@@ -46,6 +46,10 @@ function s3_upload(){
         }
     });
 }
+
+$().ready(function() {
+    $('#files').on("change", s3_upload);
+});
 </script>
 </body>
 </html>
