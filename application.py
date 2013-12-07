@@ -8,7 +8,8 @@
 
 
 from flask import Flask, render_template, request, redirect, Response, url_for
-import time, os, json, base64, hmac, sha, urllib
+import time, os, json, base64, hmac, urllib
+from hashlib import sha1
 
 app = Flask(__name__)
 
@@ -54,7 +55,7 @@ def sign_s3():
     put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
      
     # Generate the signature with which the request can be signed:
-    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, sha).digest())
+    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, sha1).digest())
     # Remove surrounding whitespace and quote special characters:
     signature = urllib.quote_plus(signature.strip())
 
