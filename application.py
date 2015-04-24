@@ -16,7 +16,7 @@ app = Flask(__name__)
 # Listen for GET requests to yourdomain.com/account/
 @app.route("/account/")
 def account():
-    # Show the account edit HTML page:
+    # Show the account-edit HTML page:
     return render_template('account.html')
 
 
@@ -51,11 +51,11 @@ def sign_s3():
     expires = int(time.time()+60*60*24)
     amz_headers = "x-amz-acl:public-read"
  
-    # Generate the PUT request that JavaScript will use:
-    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
+    # Generate the StringToSign:
+    string_to_sign = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
 
-    # Generate the signature with which the request can be signed:
-    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request.encode('utf8'), sha1).digest())
+    # Generate the signature with which the StringToSign can be signed:
+    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, string_to_sign.encode('utf8'), sha1).digest())
     # Remove surrounding whitespace and quote special characters:
     signature = urllib.quote_plus(signature.strip())
 
@@ -72,7 +72,6 @@ def sign_s3():
     
 # Main code
 if __name__ == '__main__':
-    app.debug = True
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
