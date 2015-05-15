@@ -12,7 +12,7 @@ Direct-to-S3 uploads in a Python application running on Heroku
 
 Simple example demonstrating how to accomplish a direct upload to Amazon S3 in a Python web application.
 
-The example focuses on Flask as the web framework and is targeted for use on the Heroku platform. However, nearly all of the code could be used as-is in other Python frameworks (such as Bottle and Django).
+The example focuses on Flask as the web framework and is targeted for use on the Heroku platform. However, nearly all of the code could be used as-is in other Python frameworks (such as Bottle and Django). An example using Python 3 and Django is available [here](https://gist.github.com/RyanBalfanz/f07d827a4818fda0db81).
 
 This is the companion repository to the Heroku article, [Direct to S3 File Uploads in Python](https://devcenter.heroku.com/articles/s3-upload-python).
 

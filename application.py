@@ -36,6 +36,9 @@ def submit_form():
 
 
 # Listen for GET requests to yourdomain.com/sign_s3/
+#
+# Please see https://gist.github.com/RyanBalfanz/f07d827a4818fda0db81 for an example using
+# Python 3 for this view.
 @app.route('/sign_s3/')
 def sign_s3():
     # Load necessary information into the application:
