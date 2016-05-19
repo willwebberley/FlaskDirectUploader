@@ -20,9 +20,9 @@ This code is mostly ready to be run as cloned, but a function `update_account()`
 
 
 **Running the application**
-* Set environment variables for your AWS access key and secret (see [companion article](https://devcenter.heroku.com/articles/s3-upload-python))
-* Download and install the [Heroku toolbelt](https://toolbelt.heroku.com/)
-* Run with ```$ foreman start```
+* Set environment variables for your AWS access key, secret, and bucket name (see [companion article](https://devcenter.heroku.com/articles/s3-upload-python))
+* Run `python application.py`
+* Visit [localhost:5000/account](http://localhost:5000/account) to try it out
 
 **Deploying the application (see the article [Deploying with Git](https://devcenter.heroku.com/articles/git) for more detailed information)**
 * Download and install the [Heroku toolbelt](https://toolbelt.heroku.com/)
