@@ -9,7 +9,6 @@
 
 from flask import Flask, render_template, request, redirect, url_for
 import os, urllib, json, boto3
-from botocore.client import Config
 
 app = Flask(__name__)
 
@@ -31,7 +30,7 @@ def submit_form():
 
   # Provide some procedure for storing the new details
   update_account(username, full_name, avatar_url)
-  
+
   # Redirect to the user's profile page, if appropriate
   return redirect(url_for('profile'))
 
@@ -50,12 +49,12 @@ def sign_s3():
   file_type = request.args.get('file_type')
 
   # Initialise the S3 client
-  s3 = boto3.client('s3') 
-      
+  s3 = boto3.client('s3')
+
   # Generate and return the presigned URL
   presigned_post = s3.generate_presigned_post(
-    Bucket = S3_BUCKET, 
-    Key = file_name, 
+    Bucket = S3_BUCKET,
+    Key = file_name,
     Fields = {"acl": "public-read", "Content-Type": file_type},
     Conditions = [
       {"acl": "public-read"},
