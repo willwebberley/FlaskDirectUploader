@@ -8,7 +8,7 @@
 
 
 from flask import Flask, render_template, request, redirect, url_for
-import os, urllib, json, boto3
+import os, json, boto3
 
 app = Flask(__name__)
 
