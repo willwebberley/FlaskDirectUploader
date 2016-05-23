@@ -21,7 +21,7 @@ def account():
 
 
 # Listen for POST requests to yourdomain.com/submit_form/
-@app.route("/submit_form/", methods = ["POST"])
+@app.route("/submit-form/", methods = ["POST"])
 def submit_form():
   # Collect the data posted from the HTML form in account.html:
   username = request.form["username"]
@@ -39,14 +39,14 @@ def submit_form():
 #
 # Please see https://gist.github.com/RyanBalfanz/f07d827a4818fda0db81 for an example using
 # Python 3 for this view.
-@app.route('/sign_s3/')
+@app.route('/sign-s3/')
 def sign_s3():
   # Load necessary information into the application
   S3_BUCKET = os.environ.get('S3_BUCKET')
 
   # Load required data from the request
-  file_name = request.args.get('file_name')
-  file_type = request.args.get('file_type')
+  file_name = request.args.get('file-name')
+  file_type = request.args.get('file-type')
 
   # Initialise the S3 client
   s3 = boto3.client('s3')

@@ -3,25 +3,25 @@
 
     <h1>Edit your account</h1>
 
-    <hr />
+    <hr>
 
     <h2>Your avatar</h2>
 
-    <input type="file" id="file-input"/>
+    <input type="file" id="file-input">
     <p id="status">Please select a file</p>
-    <img style="border:1px solid gray;width:300px;"  id="preview" src="/static/media/default.png" />
+    <img style="border:1px solid gray;width:300px;" id="preview" src="/static/media/default.png">
 
     <h2>Your information</h2>
 
-    <form method="POST" action="/submit_form/">
-      <input type="hidden" id="avatar-url" name="avatar-url" value="/static/media/default.png" />
-      <input type="text" name="username" placeholder="Username" /><br />
-      <input type="text" name="full-name" placeholder="Full name" /><br /><br />
-      
-      <hr />
+    <form method="POST" action="/submit-form/">
+      <input type="hidden" id="avatar-url" name="avatar-url" value="/static/media/default.png">
+      <input type="text" name="username" placeholder="Username"><br>
+      <input type="text" name="full-name" placeholder="Full name"><br><br>
+
+      <hr>
       <h2>Save changes</h2>
 
-      <input type="submit" value="Update profile" />
+      <input type="submit" value="Update profile">
     </form>
 
 
@@ -31,24 +31,24 @@
       Function to carry out the actual POST request to S3 using the signed request from the Python app.
     */
     function uploadFile(file, s3Data, url){
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", s3Data.url);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', s3Data.url);
       xhr.setRequestHeader('x-amz-acl', 'public-read');
 
-      var postData = new FormData();
+      const postData = new FormData();
       for(key in s3Data.fields){
         postData.append(key, s3Data.fields[key]);
       }
       postData.append('file', file);
 
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = () => {
         if(xhr.readyState === 4){
           if(xhr.status === 200 || xhr.status === 204){
-            document.getElementById("preview").src = url;      
-            document.getElementById("avatar-url").value = url;
+            document.getElementById('preview').src = url;
+            document.getElementById('avatar-url').value = url;
           }
           else{
-            alert("Could not upload file.");
+            alert('Could not upload file.');
           }
         }
       };
@@ -61,16 +61,16 @@
       request.
     */
     function getSignedRequest(file){
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
-      xhr.onreadystatechange = function(){
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.onreadystatechange = () => {
         if(xhr.readyState === 4){
           if(xhr.status === 200){
-            var response = JSON.parse(xhr.responseText);
+            const response = JSON.parse(xhr.responseText);
             uploadFile(file, response.data, response.url);
           }
           else{
-            alert("Could not get signed URL.");
+            alert('Could not get signed URL.');
           }
         }
       };
@@ -82,10 +82,10 @@
        start upload procedure by asking for a signed request from the app.
     */
     function initUpload(){
-      var files = document.getElementById("file-input").files;
-      var file = files[0];
+      const files = document.getElementById('file-input').files;
+      const file = files[0];
       if(!file){
-        return alert("No file selected.");
+        return alert('No file selected.');
       }
       getSignedRequest(file);
     }
@@ -93,8 +93,8 @@
     /*
        Bind listeners when the page loads.
     */
-    (function() {
-      document.getElementById("file-input").onchange = initUpload;
+    (() => {
+      document.getElementById('file-input').onchange = initUpload;
     })();
 
     </script>
